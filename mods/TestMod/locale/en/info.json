@@ -1,0 +1,13 @@
+{
+  "language-name": "English",
+  "font": {
+    "fira-code": [
+      "__TestMod__/fonts/FiraCode-Bold.ttf",
+      "__TestMod__/fonts/FiraCode-Light.ttf",
+      "__TestMod__/fonts/FiraCode-Medium.ttf",
+      "__TestMod__/fonts/FiraCode-Regular.ttf",
+      "__TestMod__/fonts/FiraCode-Retina.ttf",
+      "__TestMod__/fonts/FiraCode-SemiBold.ttf"
+    ]
+  }
+}

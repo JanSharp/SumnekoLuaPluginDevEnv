@@ -1,0 +1,6 @@
+
+# enforce LF line endings regradless of OS or git configurations
+* text=auto eol=lf
+
+# just to make sure git doesn't think those are text files
+*.ttf binary

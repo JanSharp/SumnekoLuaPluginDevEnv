@@ -1,0 +1,59 @@
+{
+  "Lua.diagnostics.globals": [
+    "game",
+    "script",
+    "remote",
+    "commands",
+    "settings",
+    "rcon",
+    "rendering",
+    "global",
+    "log",
+    "localised_print",
+    "defines",
+    "data",
+    "mods",
+    "serpent",
+    "table_size",
+    "bit32",
+
+    "__DebugAdapter",
+    "__Profiler",
+    "OnSetText",
+  ],
+  "Lua.runtime.version": "Lua 5.4",
+  "Lua.workspace.library": [
+  ],
+  "Lua.diagnostics.disable": [
+    "lowercase-global",
+  ],
+  "Lua.runtime.plugin": "mods/TestMod/plugin/plugin.lua",
+  "Lua.misc.parameters": [
+    "--develop=true",
+  ],
+  "Lua.workspace.ignoreSubmodules": true,
+  "cSpell.words": [
+    "aaabbb",
+    "autosave",
+    "factorio",
+    "fira",
+    "interpunct",
+    "localised",
+    "quickbar",
+    "sumneko",
+    "textbox",
+    "visualisation"
+  ],
+  "cSpell.ignorePaths": [
+    // default:
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/objects",
+    ".vscode",
+    ".vscode-insiders",
+    // custom:
+    "LICENSE.txt",
+    "LICENSE_THIRD_PARTY.txt",
+  ],
+}
