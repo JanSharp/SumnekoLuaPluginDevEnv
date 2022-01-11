@@ -1,17 +1,18 @@
---##
 
 if __DebugAdapter then
   __DebugAdapter.defineGlobal("OnSetText")
+  __DebugAdapter.defineGlobal("__plugin_dev")
 end
+__plugin_dev = true
 local old_require = require
 require = function(module)
   return old_require("plugin."..module)
 end
-assert(
-  pcall(old_require, "plugin.plugin"),
-  "The plugin you are working on has to be in the \z
-    'mods/TestMod/plugin' folder with a 'plugin.lua' entry point file."
-)
+
+-- If this errors because it can't find the file that means
+-- the plugin you are working on isn't in the 'mods/TestMod/plugin' folder
+-- or doesn't have a 'plugin.lua' entry point file.
+old_require("plugin.plugin")
 if not OnSetText then
   log("No 'OnSetText' entry point function (global variable) defined by the plugin.")
 end

@@ -5,13 +5,44 @@ This is an environment to develop plugins for [sumneko.lua](https://github.com/s
 
 # Required software
 
-This relies on [Factorio](https://factorio.com).
+This repo relies on [Factorio](https://factorio.com), vscode and the [Factorio Debug Extension](https://github.com/justarandomgeek/vscode-factoriomod-debug).
+
+# Best Setup
+
+The best setup is a bit scuffed and uses symbolic links because the plugins I made this for have their own git repositories consisting of just the plugin files for easy distribution. If you are not doing that you could also just use this dev env as the template for your repo and remove `/mods/TestMod/plugin` from `.gitignore`, and then distribute the actual plugin files (those in `/mods/TestMod/plugin`) using some other method. However for this example I am using a separate repo for the plugin.
+
+<!-- cSpell:ignore mkdir -->
+
+Example using `MyPlugin` as the project name:
+
+```bash
+# enter your project's root, which is empty for now
+git clone --recursive git@github.com:JanSharp/SumnekoLuaPluginDevEnv.git
+# or if you're not using ssh
+git clone --recursive https://github.com/JanSharp/SumnekoLuaPluginDevEnv.git
+# recursive for the submodules
+
+# make the folder the actual plugin will be in
+mkdir MyPlugin
+# note that if MyPlugin is an already existing plugin/repository just clone it instead of making a new folder
+```
+create symlinks using your preferred method:\
+(from `<source>` to `<link>`)\
+from `SumnekoLuaPluginDevEnv/mods` to `mods`\
+from `SumnekoLuaPluginDevEnv/.vscode` to `.vscode`\
+from `MyPlugin` to `SumnekoLuaPluginDevEnv/mods/TestMod/plugin` (this direction is important)
+
+Instead of making a symlink for `.vscode` you can also just copy those files if you wish to modify them without modifying them in the SumnekoLuaPluginDevEnv repo.
+
+These hacks are needed for vscode to not ignore your plugin files even though they are ignored by `.gitignore` in the `SumnekoLuaPluginDevEnv` repo. It just ignores a symlink instead.
+
+At this point you can start working on your plugin in the `MyPlugin` folder, with `plugin.lua` being the entry point, see next section.
 
 # How it Works
 
-When launching the game as defined in the launch profile in `launch.json` the TestMod will load the `mods/TestMod/plugin/plugin.lua` file. This is the main entry point into the plugin that one is developing.
+When launching the game as defined in the launch profile in `launch.json` the TestMod will load the `mods/TestMod/plugin/plugin.lua` file. This is the main entry point to the plugin that one is developing.
 
-It then loads the `mods/TestMod/test.lua` file, if it exists, to have some seeded test text which will be passed into the defined `OnSetTest` global function (of the plugin).
+It then loads the `mods/TestMod/test.lua` file, if it exists, to seed the source text with some test text which will be passed into the defined `OnSetTest` global function (of the plugin).
 
 The format/template for `mods/TestMod/test.lua` should be
 ```lua

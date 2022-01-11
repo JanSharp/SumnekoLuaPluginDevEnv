@@ -32,6 +32,12 @@
     "--develop=true",
   ],
   "Lua.workspace.ignoreSubmodules": true,
+  "Lua.workspace.ignoreDir": [
+    ".vscode",
+    "mods/minimal-no-base-mod",
+    "mods/JanSharpDevEnv",
+    "SumnekoLuaPluginDevEnv",
+  ],
   "cSpell.words": [
     "aaabbb",
     "autosave",
@@ -55,5 +61,8 @@
     // custom:
     "LICENSE.txt",
     "LICENSE_THIRD_PARTY.txt",
+    "mods/minimal-no-base-mod",
+    "mods/JanSharpDevEnv",
+    "SumnekoLuaPluginDevEnv",
   ],
 }

@@ -1,5 +1,5 @@
 
 /mods/debugadapter*
 /mods/mod-list.json
-/mods/TestMod/plugin/
+/mods/TestMod/plugin
 /mods/TestMod/test.lua
