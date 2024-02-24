@@ -3,3 +3,4 @@
 /mods/mod-list.json
 /mods/TestMod/plugin
 /mods/TestMod/test.lua
+/mods/TestMod/test*.lua

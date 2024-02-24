@@ -3,21 +3,44 @@
     {
       "type": "factoriomod",
       "request": "launch",
-      "name": "TestMod debug Jan#1",
-      "factorioPath": "/mnt/big/portable/factorio/bin/x64/factorio",
+      "name": "Debug Plugin",
       "modsPath": "${workspaceFolder}/mods",
       "allowDisableBaseMod": true,
       "factorioArgs": [
-        "--load-scenario",
-        "JanSharpDevEnv/NoBase",
+        "--load-scenario", "JanSharpDevEnv/NoBase",
       ],
       "disableExtraMods": true,
       "adjustMods": {
         "minimal-no-base-mod": true,
         "JanSharpDevEnv": true,
-
         "TestMod": true,
       },
+
+      "hookControl": true,
+      // "hookSettings": true,
+      // "hookData": true,
+      // "keepOldLog": true,
+    },
+    {
+      "type": "factoriomod",
+      "request": "launch",
+      "hookMode": "profile",
+      "name": "Profile Plugin",
+      "modsPath": "${workspaceFolder}/mods",
+      "allowDisableBaseMod": true,
+      "factorioArgs": [
+        "--load-scenario", "JanSharpDevEnv/NoBase",
+      ],
+      "disableExtraMods": true,
+      "adjustMods": {
+        "minimal-no-base-mod": true,
+        "JanSharpDevEnv": true,
+        "TestMod": true,
+      },
+
+      "profileSlowStart": 0,
+      "profileUpdateRate": 1,
+      "profileLines": false,
 
       // "hookSettings": true,
       // "hookData": true,

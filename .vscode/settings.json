@@ -1,4 +1,6 @@
 {
+  "editor.rulers": [110],
+  "debug.openDebug": "neverOpen",
   "Lua.diagnostics.globals": [
     "game",
     "script",
@@ -21,33 +23,48 @@
     "__Profiler",
     "OnSetText",
   ],
-  "Lua.runtime.version": "Lua 5.4",
-  "Lua.workspace.library": [
-  ],
+  "Lua.runtime.version": "Lua 5.2",
+  "Lua.workspace.library": [],
   "Lua.diagnostics.disable": [
+    "unused-local",
     "lowercase-global",
+    "duplicate-doc-alias"
   ],
   "Lua.runtime.plugin": "mods/TestMod/plugin/plugin.lua",
   "Lua.misc.parameters": [
-    "--develop=true",
+    // "--develop=true",
+  ],
+  "Lua.runtime.pluginArgs": [
+    "--ignore", "mods",
   ],
   "Lua.workspace.ignoreSubmodules": true,
   "Lua.workspace.ignoreDir": [
     ".vscode",
     "mods/minimal-no-base-mod",
     "mods/JanSharpDevEnv",
+    "mods/TestMod/plugin",
     "SumnekoLuaPluginDevEnv",
   ],
   "cSpell.words": [
     "aaabbb",
     "autosave",
+    "bnot",
+    "bxor",
+    "concat",
     "factorio",
     "fira",
+    "flib",
+    "furi",
     "interpunct",
     "localised",
+    "luadoc",
+    "modname",
+    "Nexela",
     "quickbar",
+    "stdlib",
     "sumneko",
     "textbox",
+    "typelist",
     "visualisation"
   ],
   "cSpell.ignorePaths": [
@@ -65,4 +82,12 @@
     "mods/JanSharpDevEnv",
     "SumnekoLuaPluginDevEnv",
   ],
+  "factorio.profile.displayAverageTime": false,
+  "Lua.runtime.special": {
+    "__object_name": "type",
+  },
+  "Lua.workspace.userThirdParty": [
+    "/home/jmpc4/.config/VSCodium/User/workspaceStorage/ea7341bf9f8f92d487cc1c6162d42418/justarandomgeek.factoriomod-debug/sumneko-3rd"
+  ],
+  "Lua.workspace.checkThirdParty": "ApplyInMemory",
 }

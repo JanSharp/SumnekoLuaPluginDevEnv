@@ -1,7 +1,9 @@
+--##
 
 if __DebugAdapter then
-  __DebugAdapter.defineGlobal("OnSetText")
-  __DebugAdapter.defineGlobal("__plugin_dev")
+  local defineGlobal = __DebugAdapter.defineGlobal or function(...) end
+  defineGlobal("OnSetText")
+  defineGlobal("__plugin_dev")
 end
 __plugin_dev = true
 local old_require = require
@@ -83,7 +85,7 @@ end
 ---@return string colored_diff_text
 local function merge_diff(text, diffs)
   if not diffs then
-    return text, text, nil
+    return text, text
   end
 
   local sorted_diffs = {}
@@ -111,7 +113,7 @@ local function merge_diff(text, diffs)
     diffed_buf[#diffed_buf+1] = add_interpunct(apply_color(diff.text, color_opening_tag))
     cur = diff.finish + 1
   end
-  local last_text = text:sub(cur)
+  local last_text = add_grey_interpunct(text:sub(cur))
   text_buf[#text_buf+1] = last_text
   diffed_buf[#diffed_buf+1] = last_text
   return table.concat(text_buf), table.concat(diffed_buf)
@@ -128,13 +130,39 @@ local function on_res_change(player_data)
   style.height = res.height
 end
 
+-- https://chrisyeh96.github.io/2020/03/28/terminal-colors.html
+-- https://www2.ccs.neu.edu/research/gpc/VonaUtils/vona/terminal/vtansi.htm
+local reset = "\x1b[0m"
+local bold = "\x1b[1m"
+local faint = "\x1b[2m"
+local singly_underlined = "\x1b[4m"
+local blink = "\x1b[5m"
+local reverse = "\x1b[7m"
+local hidden = "\x1b[8m"
+-- foreground colors:
+local black = "\x1b[30m"
+local red = "\x1b[31m"
+local green = "\x1b[32m"
+local yellow = "\x1b[33m"
+local blue = "\x1b[34m"
+local magenta = "\x1b[35m"
+local cyan = "\x1b[36m"
+local white = "\x1b[37m"
+
 local function run_on_text_set(player_data)
   ---@type string
   local text = player_data.input_tb.text
-  ---@type table[]|nil
-  local profiler = game.create_profiler()
-  local diffs = OnSetText and OnSetText("file:///mods/TestMod/test.lua", text) or {}
-  localised_print{"", "OnSetText ", profiler}
+  local diffs
+  for _ = 1, 5 do
+    local iteration_count = 10
+    local profiler = game.create_profiler()
+    for i = 1, iteration_count do
+      diffs = OnSetText and OnSetText("file:///mods/TestMod/test.lua", text) or {}
+    end
+    profiler.stop()
+    profiler.divide(iteration_count)
+    localised_print{"", green.."OnSetText ", profiler, reset}
+  end
   local colored_text, diffed = merge_diff(text, diffs)
   ---@type string
   player_data.colored_input_tb.text = colored_text
@@ -323,27 +351,31 @@ end)
 -- all results that ended at the same index as the previous one
 -- in the lua version the language server is using it already behaves
 -- this way, which is why this replacement is required
-local gmatch = string.gmatch
+local match = string.match
 local unpack = table.unpack
 ---@param s string
 ---@param pattern string
+---@param init integer?
 ---@return function @ iterator
-string.gmatch = function(s, pattern)
-  local new_pattern = pattern .. "()"
-  local match = {string.match(s, new_pattern)}
-  if #match == 1 then -- the pattern has to captures
-    new_pattern = "(" .. pattern .. ")()" -- then capture the whole thing
+string.gmatch = function(s, pattern, init)
+  if pattern:sub(1, 1) == "^" then
+    error("The ^ anchor does not work with gmatch.")
   end
-  local it = gmatch(s, new_pattern)
-  local prev_finish = 0
+  local new_pattern = pattern.."()"
+  -- local match = {string.match(s, new_pattern)}
+  -- if #match == 1 then -- the pattern has no captures
+  --   new_pattern = "(" .. pattern .. ")()" -- then capture the whole thing
+  -- end
+  -- local it = gmatch(s, new_pattern)
+  local prev_finish = init or 1
   return function()
-    local result, finish
-    repeat
-      result = {it()}
-      finish = result[#result]
-    until finish ~= prev_finish
-    prev_finish = finish
-    result[#result] = nil
+    local result = {match(s, new_pattern, prev_finish)}
+    local count = #result
+    if count == 1 then
+      error("This extended version of string.gmatch does not automatically capture the entire string if no captures are provided.")
+    end
+    prev_finish = result[count]
+    result[count] = nil
     return unpack(result)
   end
 end
