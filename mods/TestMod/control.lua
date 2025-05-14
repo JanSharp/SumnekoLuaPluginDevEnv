@@ -288,7 +288,7 @@ script.on_event(defines.events.on_player_created, function(event)
     diffed_tb = diffed_tb,
     auto_update = auto_update,
   }
-  global.players[event.player_index] = player_data
+  storage.players[event.player_index] = player_data
 
   on_res_change(player_data)
 
@@ -298,14 +298,14 @@ script.on_event(defines.events.on_player_created, function(event)
 end)
 
 script.on_event(defines.events.on_player_display_resolution_changed, function(event)
-  on_res_change(global.players[event.player_index])
+  on_res_change(storage.players[event.player_index])
 end)
 
 local function get_gui_event_data(event)
   ---@type table
   local tags = event.element.tags
   if tags.__plugin_test_mod then
-    return global.players[event.player_index], tags
+    return storage.players[event.player_index], tags
   end
 end
 
@@ -342,7 +342,7 @@ script.on_event(defines.events.on_gui_switch_state_changed, function(event)
 end)
 
 script.on_init(function()
-  global.players = {}
+  storage.players = {}
 end)
 
 -- in factorio lua gmatch("aaabbb", "a*") results in 2 iterations
